@@ -1,0 +1,48 @@
+server:
+  port: 8060
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: user-service-route
+            uri: lb://user-service
+            predicates:
+              - Path=/api/v1/users/**
+
+          - id: addresses-service-route
+            uri: lb://user-service
+            predicates:
+              - Path=/api/v1/addresses/**
+
+          - id: restaurant-service-route
+            uri: lb://restaurant-service
+            predicates:
+              - Path=/api/v1/restaurants/**
+
+          - id: review-service-route
+            uri: lb://review-service
+            predicates:
+              - Path=/api/v1/reviews/**
+
+          - id: recommendation-service-route
+            uri: lb://recommendation-service
+            predicates:
+              - Path=/api/v1/recommendation/**
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+

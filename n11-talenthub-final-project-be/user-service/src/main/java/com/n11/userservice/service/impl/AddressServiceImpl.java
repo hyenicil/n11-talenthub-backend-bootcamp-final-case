@@ -93,7 +93,7 @@ public class AddressServiceImpl implements AddressService {
         return addressMapper.mapAddressListToAddressResponseList(addressList);
     }
 
-    private Address getAddressById(Long id){
+    public Address getAddressById(Long id){
         return addressRepository.findById(id).orElseThrow(() -> new AddressNotFoundException(ADDRESS_NOT_FOUND));
     }
 }

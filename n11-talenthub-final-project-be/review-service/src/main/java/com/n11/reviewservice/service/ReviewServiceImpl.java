@@ -124,7 +124,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     }
 
-    private void addScoreUpdateMsgToQueue(String restaurantId) {
+    public void addScoreUpdateMsgToQueue(String restaurantId) {
 
         if (reviewRepository.findAllByRestaurantId(restaurantId).isEmpty()) {
             return;

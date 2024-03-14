@@ -1,4 +1,4 @@
-package com.n11.reviewservice.service;
+package com.n11.reviewservice.service.impl;
 
 import com.n11.reviewservice.client.RestaurantClient;
 import com.n11.reviewservice.client.UserClient;
@@ -13,6 +13,7 @@ import com.n11.reviewservice.exception.ReviewNotFoundException;
 import com.n11.reviewservice.exception.UserNotFoundException;
 import com.n11.reviewservice.mapper.ReviewMapper;
 import com.n11.reviewservice.repository.ReviewRepository;
+import com.n11.reviewservice.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;

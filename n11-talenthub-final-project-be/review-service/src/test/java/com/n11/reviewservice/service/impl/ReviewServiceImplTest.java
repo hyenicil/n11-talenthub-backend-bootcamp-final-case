@@ -1,4 +1,4 @@
-package com.n11.reviewservice.service;
+package com.n11.reviewservice.service.impl;
 
 import com.n11.reviewservice.client.RestaurantClient;
 import com.n11.reviewservice.client.UserClient;

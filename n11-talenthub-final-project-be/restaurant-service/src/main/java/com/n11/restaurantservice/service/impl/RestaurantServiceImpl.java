@@ -1,4 +1,4 @@
-package com.n11.restaurantservice.service;
+package com.n11.restaurantservice.service.impl;
 
 import com.n11.restaurantservice.document.Restaurant;
 import com.n11.restaurantservice.dto.RestaurantResponse;
@@ -7,6 +7,7 @@ import com.n11.restaurantservice.dto.RestaurantUpdateRequest;
 import com.n11.restaurantservice.exception.RestaurantNotFoundException;
 import com.n11.restaurantservice.mapper.RestaurantMapper;
 import com.n11.restaurantservice.repository.RestaurantRepository;
+import com.n11.restaurantservice.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,10 @@
-package com.n1.recommendationservice.service;
+package com.n1.recommendationservice.service.impl;
 
 import com.n1.recommendationservice.client.AddressClient;
 import com.n1.recommendationservice.common.base.BaseRestResponse;
 import com.n1.recommendationservice.dto.AddressResponse;
 import com.n1.recommendationservice.dto.RestaurantResponse;
+import com.n1.recommendationservice.service.SolrClientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

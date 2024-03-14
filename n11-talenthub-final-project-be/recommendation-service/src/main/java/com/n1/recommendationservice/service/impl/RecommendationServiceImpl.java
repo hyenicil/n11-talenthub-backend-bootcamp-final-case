@@ -1,9 +1,11 @@
-package com.n1.recommendationservice.service;
+package com.n1.recommendationservice.service.impl;
 
 import com.n1.recommendationservice.client.AddressClient;
 import com.n1.recommendationservice.dto.AddressResponse;
 import com.n1.recommendationservice.dto.RestaurantResponse;
 import com.n1.recommendationservice.exception.AddressNotFoundException;
+import com.n1.recommendationservice.service.RecommendationService;
+import com.n1.recommendationservice.service.SolrClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

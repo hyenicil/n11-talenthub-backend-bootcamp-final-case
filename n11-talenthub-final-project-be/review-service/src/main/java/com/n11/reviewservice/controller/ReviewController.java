@@ -5,7 +5,6 @@ import com.n11.reviewservice.dto.ReviewResponse;
 import com.n11.reviewservice.dto.ReviewSaveRequest;
 import com.n11.reviewservice.dto.ReviewUpdateRequest;
 import com.n11.reviewservice.service.ReviewService;
-import com.n11.reviewservice.service.ReviewServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

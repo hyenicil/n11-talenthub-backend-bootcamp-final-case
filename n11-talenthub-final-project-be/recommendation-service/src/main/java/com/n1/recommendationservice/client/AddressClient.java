@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author Mehmet Akif Tanisik
  */
-@FeignClient(value = "address", url = "http://localhost:8090/api/v1/addresses")
+@FeignClient("user-service/api/v1/addresses")
 public interface AddressClient {
 
     @GetMapping("/with-userId/{userId}")

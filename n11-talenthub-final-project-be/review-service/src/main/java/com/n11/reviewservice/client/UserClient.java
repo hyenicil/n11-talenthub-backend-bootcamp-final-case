@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 /**
  * @author Mehmet Akif Tanisik
  */
-@FeignClient(value = "review-user-client", url = "http://localhost:8090/api/v1/users")
-@Component
+@FeignClient("user-service/api/v1/users")
 public interface UserClient {
 
     @GetMapping("/{userId}")

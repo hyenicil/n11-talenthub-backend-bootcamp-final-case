@@ -84,7 +84,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurantRepository.delete(restaurant);
     }
 
-    private Restaurant getRestaurantById(String id) {
+    public Restaurant getRestaurantById(String id) {
         return restaurantRepository.findById(id).orElseThrow(() -> new RestaurantNotFoundException(RESTAURANT_NOT_FOUND));
     }
 

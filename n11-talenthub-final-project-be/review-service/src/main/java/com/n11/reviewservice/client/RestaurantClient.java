@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @author Mehmet Akif Tanisik
  */
 
-@FeignClient(value = "review-restaurant-client", url = "http://localhost:8091/api/v1/restaurants")
-@Component
+@FeignClient("restaurant-service/api/v1/restaurants")
 public interface RestaurantClient {
 
     @GetMapping("/{restaurantId}")

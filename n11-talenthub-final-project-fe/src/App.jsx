@@ -1,11 +1,11 @@
-import { Heading, Stack } from '@chakra-ui/react';
+import { Center, Heading, Stack } from '@chakra-ui/react';
 import AppTabs from './components/AppTabs';
 import { colors } from './main';
 
 const App = () => {
   return (
-    <Stack py={12}>
-      <Heading alignSelf={'center'} color={colors.primary[500]}>
+    <Stack>
+      <Heading py={6} textAlign={'Center'} bgColor={'primary.100'} color={colors.primary[700]}>
         N11 TALENTHUB
       </Heading>
       <AppTabs />

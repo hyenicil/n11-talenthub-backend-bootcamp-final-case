@@ -12,20 +12,30 @@ import {
   FormControl,
   Input,
   FormLabel,
-} from '@chakra-ui/react';
-import { useState } from 'react';
-import { restaurantAxios } from '../../utils/base-axios';
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { restaurantAxios } from "../../utils/base-axios";
 
 // eslint-disable-next-line react/prop-types
 const AddRestaurant = ({ afterSave }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure({
+    onClose: () => setErrors({}),
+  });
   const [values, setValues] = useState({});
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await restaurantAxios.post('', values);
-    afterSave();
-    onClose();
+    await restaurantAxios
+      .post("", values)
+      .then(() => {
+        afterSave();
+        onClose();
+      })
+      .catch((data) => {
+        setErrors(data.response.data.data.details);
+      });
   };
 
   const handleChange = (key) => (e) => {
@@ -46,15 +56,17 @@ const AddRestaurant = ({ afterSave }) => {
           <ModalBody>
             <form onSubmit={handleSubmit}>
               <Stack>
-                <FormControl>
+                <FormControl isInvalid={!!errors.name}>
                   <FormLabel>Name</FormLabel>
-                  <Input onChange={handleChange('name')} />
+                  <Input onChange={handleChange("name")} />
+                  <FormErrorMessage>{errors.name}</FormErrorMessage>
                 </FormControl>
-                <FormControl>
+                <FormControl isInvalid={!!errors.location}>
                   <FormLabel>Location</FormLabel>
-                  <Input onChange={handleChange('location')} />
+                  <Input onChange={handleChange("location")} />
+                  <FormErrorMessage>{errors.location}</FormErrorMessage>
                 </FormControl>
-                <Button type='submit'>Create</Button>
+                <Button type="submit">Create</Button>
               </Stack>
             </form>
           </ModalBody>

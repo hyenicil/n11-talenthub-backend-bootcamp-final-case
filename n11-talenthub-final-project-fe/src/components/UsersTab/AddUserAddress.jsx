@@ -13,18 +13,29 @@ import {
   FormControl,
   Input,
   FormLabel,
-} from '@chakra-ui/react';
-import { useState } from 'react';
-import { addressAxios } from '../../utils/base-axios';
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { addressAxios } from "../../utils/base-axios";
 
 const AddUserAddress = ({ user }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure({
+    onClose: () => setErrors({}),
+  });
   const [values, setValues] = useState({});
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addressAxios.post('', { ...values, userId: user.id });
-    onClose();
+    await addressAxios
+      .post("", { ...values, userId: user.id })
+      .then(() => {
+        afterSave();
+        onClose();
+      })
+      .catch((data) => {
+        setErrors(data.response.data.data.details);
+      });
   };
 
   const handleChange = (key) => (e) => {
@@ -35,7 +46,7 @@ const AddUserAddress = ({ user }) => {
 
   return (
     <>
-      <Button variant={'ghost'} size={'sm'} onClick={onOpen}>
+      <Button variant={"ghost"} size={"sm"} onClick={onOpen}>
         Create address
       </Button>
 
@@ -47,24 +58,28 @@ const AddUserAddress = ({ user }) => {
           <ModalBody>
             <form onSubmit={handleSubmit}>
               <Stack>
-                <FormControl>
+                <FormControl isInvalid={!!errors.city}>
                   <FormLabel>City</FormLabel>
-                  <Input onChange={handleChange('city')} />
+                  <Input onChange={handleChange("city")} />
+                  <FormErrorMessage>{errors.city}</FormErrorMessage>
                 </FormControl>
-                <FormControl>
+                <FormControl isInvalid={!!errors.district}>
                   <FormLabel>District</FormLabel>
-                  <Input onChange={handleChange('district')} />
+                  <Input onChange={handleChange("district")} />
+                  <FormErrorMessage>{errors.district}</FormErrorMessage>
                 </FormControl>
-                <FormControl>
+                <FormControl isInvalid={!!errors.street}>
                   <FormLabel>Street</FormLabel>
-                  <Input onChange={handleChange('street')} />
+                  <Input onChange={handleChange("street")} />
+                  <FormErrorMessage>{errors.street}</FormErrorMessage>
                 </FormControl>
-                <FormControl>
+                <FormControl isInvalid={!!errors.location}>
                   <FormLabel>Location</FormLabel>
-                  <Input onChange={handleChange('location')} />
+                  <Input onChange={handleChange("location")} />
+                  <FormErrorMessage>{errors.location}</FormErrorMessage>
                 </FormControl>
 
-                <Button type='submit'>Create</Button>
+                <Button type="submit">Create</Button>
               </Stack>
             </form>
           </ModalBody>

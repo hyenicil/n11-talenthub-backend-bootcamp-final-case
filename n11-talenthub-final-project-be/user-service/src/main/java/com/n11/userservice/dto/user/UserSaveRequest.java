@@ -19,6 +19,7 @@ public record UserSaveRequest(
 
         LocalDate birthDate,
 
+        @NotBlank(message = "Email cant be null or blank!")
         @Email
         String email,
 

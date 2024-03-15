@@ -2,6 +2,7 @@ package com.n11.userservice.dto.user;
 
 import com.n11.userservice.entity.enums.Gender;
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -20,6 +21,7 @@ public record UserUpdateRequest(
         @Past
         LocalDate birthDate,
 
+        @NotBlank(message = "Email cant be null or blank!")
         @Email
         String email,
 

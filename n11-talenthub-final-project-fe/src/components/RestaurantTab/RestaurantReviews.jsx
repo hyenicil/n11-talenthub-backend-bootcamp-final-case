@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useCallback, useEffect, useState } from 'react';
-import { reviewAxios } from '../../utils/base-axios';
+import { useCallback, useEffect, useState } from "react";
+import { reviewAxios } from "../../utils/base-axios";
 import {
   Table,
   Thead,
@@ -20,9 +20,9 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-} from '@chakra-ui/react';
-import { FaStar, FaRegStar } from 'react-icons/fa';
-import UpdateReview from './UpdateReview';
+} from "@chakra-ui/react";
+import { FaStar, FaRegStar } from "react-icons/fa";
+import UpdateReview from "./UpdateReview";
 
 const RestaurantReviews = ({ restaurant }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -40,11 +40,11 @@ const RestaurantReviews = ({ restaurant }) => {
 
   return (
     <>
-      <Button size={'sm'} variant={'outline'} onClick={onOpen}>
+      <Button size={"sm"} variant={"outline"} onClick={onOpen}>
         Get restaurant reviews
       </Button>
 
-      <Modal size={'5xl'} isOpen={isOpen} onClose={onClose}>
+      <Modal size={"5xl"} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>RestaurantReviews</ModalHeader>
@@ -70,7 +70,7 @@ const RestaurantReviews = ({ restaurant }) => {
                           <Flex>
                             {new Array(5).fill(null).map((_, index) => {
                               return (
-                                <Box key={index} color={'gold'}>
+                                <Box key={index} color={"#ffd10d"}>
                                   {index < review.rate ? (
                                     <FaStar />
                                   ) : (

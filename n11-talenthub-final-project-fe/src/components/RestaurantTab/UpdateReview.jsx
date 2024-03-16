@@ -14,19 +14,38 @@ import {
   Input,
   FormLabel,
   Select,
-} from '@chakra-ui/react';
-import { useState } from 'react';
-import { reviewAxios } from '../../utils/base-axios';
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { reviewAxios } from "../../utils/base-axios";
+import { render } from "react-dom";
 
 const UpdateReview = ({ afterSave, review }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure({
+    onClose: () => {
+      setErrors({}), setValues(review);
+    },
+  });
   const [values, setValues] = useState(review);
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    setValues(review);
+  }, [review]);
+
+  console.log("render");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await reviewAxios.patch(`/${review.id}`, values);
-    afterSave();
-    onClose();
+    await reviewAxios
+      .patch(`/${review.id}`, values)
+      .then(() => {
+        onClose();
+        afterSave();
+      })
+      .catch((data) => {
+        setErrors(data.response.data.data.details);
+      });
   };
 
   const handleChange = (key) => (e) => {
@@ -37,7 +56,7 @@ const UpdateReview = ({ afterSave, review }) => {
 
   return (
     <>
-      <Button variant={'ghost'} size={'sm'} onClick={onOpen}>
+      <Button variant={"ghost"} size={"sm"} onClick={onOpen}>
         Update review
       </Button>
 
@@ -49,18 +68,19 @@ const UpdateReview = ({ afterSave, review }) => {
           <ModalBody>
             <form onSubmit={handleSubmit}>
               <Stack>
-                <FormControl>
+                <FormControl isInvalid={!!errors.comment}>
                   <FormLabel>Comment</FormLabel>
                   <Input
-                    defaultValue={review.comment}
-                    onChange={handleChange('comment')}
+                    defaultValue={values.comment}
+                    onChange={handleChange("comment")}
                   />
+                  <FormErrorMessage>{errors.comment}</FormErrorMessage>
                 </FormControl>
-                <FormControl>
+                <FormControl isInvalid={!!errors.rate}>
                   <FormLabel>Rate</FormLabel>
                   <Select
-                    defaultValue={review.rate}
-                    onChange={handleChange('rate')}
+                    defaultValue={values.rate}
+                    onChange={handleChange("rate")}
                   >
                     <option value={1}>1</option>
                     <option value={2}>2</option>
@@ -68,9 +88,10 @@ const UpdateReview = ({ afterSave, review }) => {
                     <option value={4}>4</option>
                     <option value={5}>5</option>
                   </Select>
+                  <FormErrorMessage>{errors.rate}</FormErrorMessage>
                 </FormControl>
 
-                <Button type='submit'>Update</Button>
+                <Button type="submit">Update</Button>
               </Stack>
             </form>
           </ModalBody>

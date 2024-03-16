@@ -33,6 +33,8 @@ const AddUser = ({ afterSave }) => {
       .then(() => {
         afterSave();
         onClose();
+
+        setValues({});
       })
       .catch((data) => {
         setErrors(data.response.data.data.details);
@@ -60,22 +62,22 @@ const AddUser = ({ afterSave }) => {
                 <FormControl isInvalid={!!errors.name}>
                   <FormLabel>Name</FormLabel>
                   <Input onChange={handleChange("name")} />
-                  <FormErrorMessage>{!!errors.name}</FormErrorMessage>
+                  <FormErrorMessage>{errors.name}</FormErrorMessage>
                 </FormControl>
                 <FormControl isInvalid={!!errors.surname}>
                   <FormLabel>Surname</FormLabel>
                   <Input onChange={handleChange("surname")} />
-                  <FormErrorMessage>{!!errors.surname}</FormErrorMessage>
+                  <FormErrorMessage>{errors.surname}</FormErrorMessage>
                 </FormControl>
                 <FormControl isInvalid={!!errors.email}>
                   <FormLabel>Email</FormLabel>
                   <Input onChange={handleChange("email")} />
-                  <FormErrorMessage>{!!errors.email}</FormErrorMessage>
+                  <FormErrorMessage>{errors.email}</FormErrorMessage>
                 </FormControl>
                 <FormControl isInvalid={!!errors.birthDate}>
                   <FormLabel>Birth date</FormLabel>
                   <Input onChange={handleChange("birthDate")} />
-                  <FormErrorMessage>{!!errors.birthDate}</FormErrorMessage>
+                  <FormErrorMessage>{errors.birthDate}</FormErrorMessage>
                 </FormControl>
                 <FormControl isInvalid={!!errors.gender}>
                   <FormLabel>Gender</FormLabel>
@@ -86,7 +88,7 @@ const AddUser = ({ afterSave }) => {
                     <option value="MALE">Male</option>
                     <option value="FEMALE">Female</option>
                   </Select>
-                  <FormErrorMessage>{!!errors.gender}</FormErrorMessage>
+                  <FormErrorMessage>{errors.gender}</FormErrorMessage>
                 </FormControl>
                 <Button type="submit">Create</Button>
               </Stack>

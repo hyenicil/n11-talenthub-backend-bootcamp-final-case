@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useCallback, useEffect, useState } from 'react';
-import { recommendationAxios } from '../../utils/base-axios';
+import { useCallback, useEffect, useState } from "react";
+import { recommendationAxios } from "../../utils/base-axios";
 import {
   Table,
   Thead,
@@ -20,8 +20,8 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-} from '@chakra-ui/react';
-import { FaStar, FaRegStar } from 'react-icons/fa';
+} from "@chakra-ui/react";
+import { FaStar, FaRegStar } from "react-icons/fa";
 
 const Recommendations = ({ user }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -39,11 +39,11 @@ const Recommendations = ({ user }) => {
 
   return (
     <>
-      <Button size={'sm'} variant={'outline'} onClick={onOpen}>
+      <Button size={"sm"} variant={"outline"} onClick={onOpen}>
         Get recommendations
       </Button>
 
-      <Modal size={'5xl'} isOpen={isOpen} onClose={onClose}>
+      <Modal size={"5xl"} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Recommendations</ModalHeader>
@@ -61,7 +61,7 @@ const Recommendations = ({ user }) => {
                 </Thead>
                 <Tbody>
                   {recommendations.map((recommendation) => {
-                    const [lat, lng] = recommendation.location.split(',');
+                    const [lat, lng] = recommendation.location.split(",");
                     const location = `(${lat} , ${lng})`;
 
                     return (
@@ -73,7 +73,7 @@ const Recommendations = ({ user }) => {
                           <Flex>
                             {new Array(5).fill(null).map((_, index) => {
                               return (
-                                <Box key={index} color={'gold'}>
+                                <Box key={index} color={"gold"}>
                                   {index < recommendation.averageScore ? (
                                     <FaStar />
                                   ) : (

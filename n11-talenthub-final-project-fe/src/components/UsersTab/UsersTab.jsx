@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { userAxios } from '../../utils/base-axios';
+import { useCallback, useEffect, useState } from "react";
+import { userAxios } from "../../utils/base-axios";
 import {
   Table,
   Thead,
@@ -12,18 +12,18 @@ import {
   Flex,
   Text,
   Box,
-} from '@chakra-ui/react';
-import AddUser from './AddUser';
-import UpdateUser from './UpdateUser';
-import DeleteUser from './DeleteUser';
-import AddUserAddress from './AddUserAddress';
-import Recommendations from './Recommendations';
+} from "@chakra-ui/react";
+import AddUser from "./AddUser";
+import UpdateUser from "./UpdateUser";
+import DeleteUser from "./DeleteUser";
+import AddUserAddress from "./AddUserAddress";
+import Recommendations from "./Recommendations";
 
 const UsersTab = () => {
   const [users, setUsers] = useState([]);
 
   const fetchUsers = useCallback(() => {
-    userAxios.get('').then((res) => {
+    userAxios.get("").then((res) => {
       setUsers(res.data.data);
     });
   }, []);
@@ -34,21 +34,21 @@ const UsersTab = () => {
 
   if (!users.length)
     return (
-      <Stack align={'center'}>
-         <Box alignSelf={'end'}>
-        <AddUser afterSave={fetchUsers} />
-      </Box>
-        <Text>No Data</Text>
+      <Stack>
+        <Flex justify={"start"}>
+          <AddUser afterSave={fetchUsers} />
+        </Flex>
+        <Text alignSelf={"center"}>No Data</Text>
       </Stack>
     );
 
   return (
     <Stack>
-      <Flex justify={'end'}>
+      <Flex justify={"start"}>
         <AddUser afterSave={fetchUsers} />
       </Flex>
       <TableContainer>
-        <Table>
+        <Table variant="striped" colorScheme="blackAlpha">
           <Thead>
             <Tr>
               <Th>Id</Th>
@@ -58,6 +58,7 @@ const UsersTab = () => {
               <Th>Email</Th>
               <Th>Gender</Th>
               <Th>Action</Th>
+              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -67,13 +68,17 @@ const UsersTab = () => {
                   <Td>{user.id}</Td>
                   <Td>{user.name}</Td>
                   <Td>{user.surname}</Td>
-                  {user.birthDate?<Td>{user.birthDate}</Td>:nu}
+                  {user.birthDate ? <Td>{user.birthDate}</Td> : nu}
                   <Td>{user.email}</Td>
                   <Td>{user.gender}</Td>
                   <Td>
                     <Flex gap={2}>
                       <DeleteUser afterSave={fetchUsers} user={user} />
                       <UpdateUser afterSave={fetchUsers} user={user} />
+                    </Flex>
+                  </Td>
+                  <Td>
+                    <Flex gap={2}>
                       <AddUserAddress user={user} />
                       <Recommendations user={user} />
                     </Flex>

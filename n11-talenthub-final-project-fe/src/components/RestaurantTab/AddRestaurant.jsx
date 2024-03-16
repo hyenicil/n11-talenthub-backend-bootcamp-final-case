@@ -17,7 +17,6 @@ import {
 import { useState } from "react";
 import { restaurantAxios } from "../../utils/base-axios";
 
-// eslint-disable-next-line react/prop-types
 const AddRestaurant = ({ afterSave }) => {
   const { isOpen, onOpen, onClose } = useDisclosure({
     onClose: () => setErrors({}),
@@ -32,6 +31,8 @@ const AddRestaurant = ({ afterSave }) => {
       .then(() => {
         afterSave();
         onClose();
+
+        setValues({});
       })
       .catch((data) => {
         setErrors(data.response.data.data.details);

@@ -14,18 +14,31 @@ import {
   Input,
   FormLabel,
   Select,
-} from '@chakra-ui/react';
-import { useState } from 'react';
-import { reviewAxios } from '../../utils/base-axios';
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { reviewAxios } from "../../utils/base-axios";
 
 const AddReview = ({ restaurant }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure({
+    onClose: () => {
+      setErrors({}), setValues({});
+    },
+  });
   const [values, setValues] = useState({});
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await reviewAxios.post('', { ...values, restaurantId: restaurant.id });
-    onClose();
+    await reviewAxios
+      .post("", { ...values, restaurantId: restaurant.id })
+      .then(() => {
+        onClose();
+        afterSave();
+      })
+      .catch((data) => {
+        setErrors(data.response.data.data.details);
+      });
   };
 
   const handleChange = (key) => (e) => {
@@ -36,7 +49,7 @@ const AddReview = ({ restaurant }) => {
 
   return (
     <>
-      <Button variant={'ghost'} size={'sm'} onClick={onOpen}>
+      <Button variant={"ghost"} size={"sm"} onClick={onOpen}>
         Create review
       </Button>
 
@@ -48,26 +61,32 @@ const AddReview = ({ restaurant }) => {
           <ModalBody>
             <form onSubmit={handleSubmit}>
               <Stack>
-                <FormControl>
+                <FormControl isInvalid={!!errors.comment}>
                   <FormLabel>Comment</FormLabel>
-                  <Input onChange={handleChange('comment')} />
+                  <Input onChange={handleChange("comment")} />
+                  <FormErrorMessage>{errors.comment}</FormErrorMessage>
                 </FormControl>
-                <FormControl>
+                <FormControl isInvalid={!!errors.userId}>
                   <FormLabel>User id</FormLabel>
-                  <Input onChange={handleChange('userId')} />
+                  <Input onChange={handleChange("userId")} />
+                  <FormErrorMessage>{errors.userId}</FormErrorMessage>
                 </FormControl>
-                <FormControl>
+                <FormControl isInvalid={!!errors.rate}>
                   <FormLabel>Rate</FormLabel>
-                  <Select onChange={handleChange('rate')}>
+                  <Select
+                    placeholder="Select Option"
+                    onChange={handleChange("rate")}
+                  >
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
                     <option value={4}>4</option>
                     <option value={5}>5</option>
                   </Select>
+                  <FormErrorMessage>{errors.rate}</FormErrorMessage>
                 </FormControl>
 
-                <Button type='submit'>Create</Button>
+                <Button type="submit">Create</Button>
               </Stack>
             </form>
           </ModalBody>

@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { restaurantAxios } from '../../utils/base-axios';
+import { useCallback, useEffect, useState } from "react";
+import { restaurantAxios } from "../../utils/base-axios";
 import {
   Table,
   Thead,
@@ -12,19 +12,20 @@ import {
   Flex,
   Box,
   Text,
-} from '@chakra-ui/react';
-import AddRestaurant from './AddRestaurant';
-import UpdateRestaurant from './UpdateRestaurant';
-import AddReview from './AddReview';
-import RestaurantReviews from './RestaurantReviews';
-import DeleteRestaurant from './DeleteRestaurant';
-import { FaStar, FaRegStar } from 'react-icons/fa';
+  Center,
+} from "@chakra-ui/react";
+import AddRestaurant from "./AddRestaurant";
+import UpdateRestaurant from "./UpdateRestaurant";
+import AddReview from "./AddReview";
+import RestaurantReviews from "./RestaurantReviews";
+import DeleteRestaurant from "./DeleteRestaurant";
+import { FaStar, FaRegStar } from "react-icons/fa";
 
 const RestaurantsTab = () => {
   const [restaurants, setRestaurants] = useState([]);
 
   const fetchRestaurants = useCallback(() => {
-    restaurantAxios.get('').then((res) => {
+    restaurantAxios.get("").then((res) => {
       setRestaurants(res.data.data);
     });
   }, []);
@@ -35,21 +36,21 @@ const RestaurantsTab = () => {
 
   if (!restaurants.length)
     return (
-      <Stack align={'center'}>
-      <Box alignSelf={'end'}>
-     <AddRestaurant afterSave={fetchRestaurants} />
-   </Box>
-     <Text>No Data</Text>
-   </Stack>
+      <Stack>
+        <Flex justify={"start"}>
+          <AddRestaurant afterSave={fetchRestaurants} />
+        </Flex>
+        <Text alignSelf={"Center"}>No Data</Text>
+      </Stack>
     );
 
   return (
     <Stack>
-      <Flex justify={'end'}>
+      <Flex justify={"start"}>
         <AddRestaurant afterSave={fetchRestaurants} />
       </Flex>
       <TableContainer>
-        <Table>
+        <Table variant="striped" colorScheme="blackAlpha">
           <Thead>
             <Tr>
               <Th>Id</Th>
@@ -57,11 +58,12 @@ const RestaurantsTab = () => {
               <Th>Location</Th>
               <Th>Average score</Th>
               <Th>Actions</Th>
+              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
             {restaurants.map((restaurant) => {
-              const [lat, lng] = restaurant.location.split(',');
+              const [lat, lng] = restaurant.location.split(",");
               const location = `(${lat} , ${lng})`;
 
               return (
@@ -73,7 +75,7 @@ const RestaurantsTab = () => {
                     <Flex>
                       {new Array(5).fill(null).map((_, index) => {
                         return (
-                          <Box key={index} color={'gold'}>
+                          <Box key={index} color={"#ffd10d"}>
                             {index < restaurant.averageScore ? (
                               <FaStar />
                             ) : (
@@ -86,7 +88,7 @@ const RestaurantsTab = () => {
                   </Td>
 
                   <Td>
-                    <Flex gap={2}>
+                    <Flex gap={4}>
                       <DeleteRestaurant
                         afterSave={fetchRestaurants}
                         restaurant={restaurant}
@@ -95,6 +97,10 @@ const RestaurantsTab = () => {
                         afterSave={fetchRestaurants}
                         restaurant={restaurant}
                       />
+                    </Flex>
+                  </Td>
+                  <Td>
+                    <Flex gap={4}>
                       <AddReview restaurant={restaurant} />
                       <RestaurantReviews restaurant={restaurant} />
                     </Flex>

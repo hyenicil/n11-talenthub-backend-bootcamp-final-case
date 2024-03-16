@@ -20,7 +20,9 @@ import { addressAxios } from "../../utils/base-axios";
 
 const AddUserAddress = ({ user }) => {
   const { isOpen, onOpen, onClose } = useDisclosure({
-    onClose: () => setErrors({}),
+    onClose: () => {
+      setErrors({}), setValues({});
+    },
   });
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
@@ -30,8 +32,9 @@ const AddUserAddress = ({ user }) => {
     await addressAxios
       .post("", { ...values, userId: user.id })
       .then(() => {
-        afterSave();
+        // Call onClose() to close the modal after a successful save
         onClose();
+        afterSave(); // Assuming afterSave() is defined elsewhere
       })
       .catch((data) => {
         setErrors(data.response.data.data.details);

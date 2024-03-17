@@ -1,5 +1,6 @@
 package com.n11.loggingservice.listener;
 
+import com.n11.loggingservice.exception.UnProcessableLogException;
 import com.n11.loggingservice.model.LogObject;
 import com.n11.loggingservice.repository.LobObjectRepository;
 import lombok.Builder;
@@ -22,10 +23,10 @@ public class LoggingListener {
     @RabbitListener(queues = "gateway.logging.queue")
     public void process(LogObject message) {
         try {
-
             lobObjectRepository.save(message);
         } catch (Exception e) {
             log.info("Error occurred during saving log into database. Cause : {}",e.getMessage());
+            throw new UnProcessableLogException("Unprocessable log exception occurred!");
         }
     }
 

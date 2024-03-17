@@ -1,6 +1,6 @@
 package com.n11.loggingservice.config;
 
-import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -13,6 +13,44 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class RabbitMqConfig {
+
+
+    @Bean
+    Queue scoreUpdaterDql() {
+        return QueueBuilder.durable("gateway.logging.dlq").build();
+    }
+
+    @Bean
+    DirectExchange scoreUpdaterDlqExchange() {
+        return new DirectExchange("gateway.logging.dlq.exchange");
+    }
+    @Bean
+    Binding scoreUpdaterDlqBinding() {
+        return BindingBuilder.bind(scoreUpdaterDql())
+                .to(scoreUpdaterDlqExchange())
+                .with("gateway.logging.dlq.routing-key");
+    }
+
+    @Bean
+    Queue scoreUpdaterQueue() {
+        return QueueBuilder
+                .durable("gateway.logging.queue")
+                .withArgument("x-dead-letter-exchange", "gateway.logging.dlq.exchange")
+                .withArgument("x-dead-letter-routing-key", "gateway.logging.dlq.routing-key").build();
+    }
+
+    @Bean
+    DirectExchange scoreUpdaterQueueExchange() {
+        return new DirectExchange("gateway.logging.queue.exchange");
+    }
+
+    @Bean
+    Binding scoreUpdaterQueueBinding() {
+        return BindingBuilder.bind(scoreUpdaterQueue())
+                .to(scoreUpdaterQueueExchange())
+                .with("gateway.logging.queue.routing-key");
+    }
+
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();

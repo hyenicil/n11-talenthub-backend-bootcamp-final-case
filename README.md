@@ -66,7 +66,7 @@ All services listed below has their own Swagger documentation with detailed expl
 | `/{id}` | `DELETE` | Deletes user. (Hard Delete) |
 
 
-### ADDRESS-SERVICE ```/api/v1/addresses ```
+### USER-SERVICE ```/api/v1/addresses ```
 
 | Uri | Method     | Description                |
 | :-------- | :------- | :------------------------- |

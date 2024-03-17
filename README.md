@@ -150,7 +150,8 @@ It is as easy as explained above. Now we are ready to see front end.
 ![App Screenshot4](https://i.ibb.co/n3dXCh5/8.png)
 ![App Screenshot5](https://i.ibb.co/G7z198S/9.png)
 ![App Screenshot6](https://i.ibb.co/MNMmwZZ/11.png)
-![App Screenshot7](https://i.ibb.co/47YgNcT/12.png)
+
+[//]: # (![App Screenshot7]&#40;https://i.ibb.co/47YgNcT/12.png&#41;)
 ![App Screenshot8](https://i.ibb.co/VWVSZPb/13.png)
 ![App Screenshot9](https://i.ibb.co/QjrRRsR/14.png)
 ![App Screenshot10](https://i.ibb.co/XCFc1cJ/16.png)

@@ -1,0 +1,87 @@
+version: '3.7'
+
+services:
+  solr:
+    image: solr
+    container_name: solr
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./data:/var/solr/data
+    networks:
+      - mynetwork
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.10.5-management
+    environment:
+      SPRING.RABBITMQ.HOST: rabbitmq
+      SPRING.RABBITMQ.PORT: 5672
+      SPRING.RABBITMQ.USERNAME: guest
+      SPRING.RABBITMQ.PASSWORD: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - mynetwork
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=logs_db
+    networks:
+      - mynetwork
+
+  postgresql-user:
+    container_name: n11-user-postgresql
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: n11_user_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    expose:
+      - "5430"
+    ports:
+      - "5430:5430"
+    command: -p 5430
+    restart: always
+    networks:
+      - mynetwork
+
+
+  postgresql-review:
+    container_name: n11-review-postgresql
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: n11_review_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    expose:
+      - "5431"
+    ports:
+      - "5431:5431"
+    command: -p 5431
+    restart: always
+    networks:
+      - mynetwork
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+
+
+
+
+
